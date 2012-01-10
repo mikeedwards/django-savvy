@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}Plan{% endblock %}
+{% block headline %}Plan{% endblock %}
+{% block content %}
+        <section class="task">
+			<img src="http://www.10mockingbirdlane.com/printables/household-budget-worksheet.jpg"/>
+        </section>
+        <section class="palette">
+            <form>
+                <input type="submit" value="save">
+                {% csrf_token %}
+                <div class="widget plan long"><textarea></textarea></div>
+                <div class="widget grade"><textarea></textarea></div>
+                <div class="widget plan short"><input></div>
+            </form>
+        </section>
+{% endblock %}
+{% block post_script %}
+        <script>
+            $(document).ready(function(){
+                $(".widget.plan").hover(function(e){
+                    $(this).toggleClass("highlight");
+                }).draggable({
+                    start:function(e,ui){
+                        $(this).toggleClass("moving");
+                    },              
+                    stop:function(e,ui){
+                        $(this).toggleClass("moving");
+                        var current_id = $(this).prop("id")||null;
+                        var that = $(this);
+                        var data = ui.position;
+                        register = function() {
+                            var args = arguments[0] || {};
+                            var id = args.id;
+                            if (id !== that.prop('id')) {
+                                that.prop('id',id);                            	
+                            }
+                            alert(id);
+                            return that;
+                        }
+                        data['current_id'] = current_id;
+                        Dajaxice.lessons.position_widget(register,data);
+                    }              
+                });
+                
+                $(".widget.plan.long").resizable({
+                    
+                });
+
+                $(".widget.plan.short").resizable({
+                    maxHeight: 30,
+                    minHeight: 30
+                });
+                
+                $(".widget.grade").mousemove(function(e){
+                	var x = e.pageX - this.offsetLeft;
+                	if (x > this.offsetWidth/2) {
+                		$(this).addClass("incorrect");
+                        $(this).removeClass("correct");
+                	} else {
+                        $(this).addClass("correct");
+                        $(this).removeClass("incorrect");
+                    }
+                }).mouseleave(function(e){
+                    $(this).removeClass("correct");
+                    $(this).removeClass("incorrect");                	
+                });
+            });
+        </script>
+{% endblock %}

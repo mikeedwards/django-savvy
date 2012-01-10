@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}{{object.title}}{% endblock %}
+{% block extra_style %}
+        <link rel="stylesheet" href="{{STATIC_URL}}lessons/css/take.css">
+{% endblock %}
+{% block headline %}{{object.title}}{% endblock %}
+{% block content %}
+        <form>
+        <section class="workspace">
+	        <section class="task">
+	            <img src="{{ object.background.url }}"/>
+	        </section>
+            <section class="palette">
+                <input type="submit" value="save">
+            </section>
+        </section>
+        </form>
+{% endblock %}
+{% block post_script %}
+        <script>
+            var Savvy = Savvy || {};
+            
+            Savvy.take = {
+                data: {{object.field_data|safe}},
+                task: $(".task"),
+                assign: function(){
+                    for (w in this.data) {
+                        var widget = this.data[w];
+                        var element;
+                        if (widget.type === "checkbox") {
+                        	element = $('<div class="widget take"><input type="checkbox" id="' + widget.id + '"></div>');
+                        }
+                        if (widget.type === "text") {
+                        	element = $('<div class="widget take"><input type="text" id="' + widget.id + '"></div>');
+                        }
+                        if (widget.type === "textarea") {
+                        	element = $('<div class="widget take"><textarea id="' + widget.id + '"></textarea></div>');
+                        }
+                        element.appendTo(this.task).css(
+                        		        "left",widget.left*100 +"%"
+                        		        ).css(
+                        				"top",widget.top*100 + "%"
+                        				).css(
+                                        "width",widget.width*100 + "%"
+                                        ).css(
+                                        "height",widget.height*100 + "%"
+                                        );
+                    }
+                },
+            }
+            
+            $(document).ready(Savvy.take.assign());
+        </script>
+{% endblock %}

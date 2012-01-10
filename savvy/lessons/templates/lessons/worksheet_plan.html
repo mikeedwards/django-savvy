@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }}{{object.title}}{% endblock %}
+{% block extra_style %}
+        <link rel="stylesheet" href="{{STATIC_URL}}lessons/css/plan.css">
+{% endblock %}
+{% block headline %}{{object.title}}{% endblock %}
+{% block content %}
+        <section class="workspace">
+	        <section class="task">
+	            <img src="{{ object.background.url }}"/>
+	        </section>
+	        <section class="palette">
+	            <form>
+<!-- 	                <input type="submit" value="save">
+ -->
+                    <input type="hidden" id="worksheet-pk" value="{{ object.pk }}">
+                    <input type="button" id="button-add-short" value="Add short field">
+                    <input type="button" id="button-add-long" value="Add long field">
+                    <input type="button" id="button-add-checkbox" value="Add checkbox">
+                    <input type="button" id="button-save" value="Save">
+	                <!-- div class="widget plan long"><textarea></textarea></div>
+	                <div class="widget grade"><textarea></textarea></div>
+	                <div class="widget plan short"><input></div-->
+	            </form>
+	        </section>
+        </section>
+{% endblock %}
+{% block post_script %}
+        <script>
+            
+            $(document).ready(function(){
+            	$("#button-add-long").click(function(e){
+            		$('<div class="widget plan long"><textarea></textarea></div>').hover(function(e){
+                        $(this).toggleClass("highlight");
+                    }).draggable({
+                        start:function(e,ui){
+                            $(this).toggleClass("moving");
+                        },              
+                        stop:function(e,ui){
+                            $(this).toggleClass("moving");
+                            var current_id = $(this).prop("id")||null;
+                            var that = $(this);
+                            var data = ui.position;
+                            register = function() {
+                                var args = arguments[0] || {};
+                                var id = args.id;
+                                if (id !== that.prop('id')) {
+                                    that.prop('id',id);                             
+                                }
+                                return that;
+                            }
+                            data['current_id'] = current_id;
+                            Dajaxice.lessons.position_widget(register,data);
+                        }              
+                    }).resizable({}).appendTo(".task");
+            		
+            	});
+            	
+                $("#button-add-short").click(function(e){
+                    $('<div class="widget plan short"><input type="text"></div>').hover(function(e){
+                        $(this).toggleClass("highlight");
+                    }).draggable({
+                        start:function(e,ui){
+                            $(this).toggleClass("moving");
+                        },              
+                        stop:function(e,ui){
+                            $(this).toggleClass("moving");
+                            var current_id = $(this).prop("id")||null;
+                            var that = $(this);
+                            var data = ui.position;
+                            register = function() {
+                                var args = arguments[0] || {};
+                                var id = args.id;
+                                if (id !== that.prop('id')) {
+                                    that.prop('id',id);                             
+                                }
+                                return that;
+                            }
+                            data['current_id'] = current_id;
+                            Dajaxice.lessons.position_widget(register,data);
+                        }              
+                    }).resizable({
+                        maxHeight: 30,
+                        minHeight: 30
+                    }).appendTo(".task");
+                    
+                });
+                
+                $("#button-add-checkbox").click(function(e){
+                    $('<div class="widget plan short"><input type="checkbox"></div>').hover(function(e){
+                        $(this).toggleClass("highlight");
+                    }).draggable({
+                        start:function(e,ui){
+                            $(this).toggleClass("moving");
+                        },              
+                        stop:function(e,ui){
+                            $(this).toggleClass("moving");
+                            var current_id = $(this).prop("id")||null;
+                            var that = $(this);
+                            var data = ui.position;
+                            register = function() {
+                                var args = arguments[0] || {};
+                                var id = args.id;
+                                if (id !== that.prop('id')) {
+                                    that.prop('id',id);                             
+                                }
+                                return that;
+                            }
+                            data['current_id'] = current_id;
+                            Dajaxice.lessons.position_widget(register,data);
+                        }              
+                    }).appendTo(".task");
+                    
+                });
+                
+                $("#button-save").click(function(e){
+                    var pk = $("#worksheet-pk").val();
+                	var background = $(".task img")[0];
+                	var data = {
+                			pk:pk,
+                			widgets:[]
+                	}
+                    var save_widgets = function() {
+                        
+                    }
+
+                	$(".widget.plan").each(function(i){
+                		var that = $(this)[0];
+                		
+                		var type = $(this).find("input").prop("type")||"textarea";
+                		
+                		var widget_data = {
+                			id: that.id,
+                			type: type,
+                			left: that.offsetLeft,	
+                            top: that.offsetTop,
+                            width: that.offsetWidth-20, 
+                            height: that.offsetHeight,
+                            backgroundLeft: background.offsetLeft,
+                            backgroundTop: background.offsetTop,
+                            backgroundWidth: background.offsetWidth,
+                	        backgroundHeight: background.offsetHeight
+                		};
+                		data.widgets.push(widget_data);
+                	});
+                    Dajaxice.lessons.save(save_widgets,data);
+                });
+                
+                $(".widget.grade").mousemove(function(e){
+                    var x = e.pageX - this.offsetLeft;
+                    if (x > this.offsetWidth/2) {
+                        $(this).addClass("incorrect");
+                        $(this).removeClass("correct");
+                    } else {
+                        $(this).addClass("correct");
+                        $(this).removeClass("incorrect");
+                    }
+                }).mouseleave(function(e){
+                    $(this).removeClass("correct");
+                    $(this).removeClass("incorrect");                   
+                });
+            });
+        </script>
+{% endblock %}

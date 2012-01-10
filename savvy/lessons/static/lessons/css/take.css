@@ -1,0 +1,92 @@
+.workspace
+{
+    overflow: hidden;
+    width: 80%;
+    padding-top: 1em;
+}
+.task
+{
+	float: left;
+	position: relative;
+	width: 60%;
+}
+.task img
+{
+    border: 1px solid #000;
+    max-width: 100%;
+    width: 100%;
+}
+.palette
+{
+	float: right;
+	width: 30%;
+}
+
+form {
+    display: block;
+}
+
+div.widget {
+    background:none;
+    border:none;
+    left: 0px;
+    margin:0 20px;
+    padding:0; /*5px 5px 5px 5px;/*workaround for textarea margin*/
+    position: absolute;
+    top: 0px;
+}
+
+div.widget textarea {
+    background-color: #fff;
+    border:1px solid #999;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: block;/*reset from inline*/
+    font-family: Arial, Helvetica, "sans serif";
+    font-size: 0.8em;
+    height: 100%;
+    line-height: 1.2em;
+    margin: 0;/*remove defaults*/
+    max-width: 100%;
+    overflow-y: auto;/*resets IE*/
+    overflow-x: hidden;/*resets IE*/
+    padding: 4px;
+    resize: none;
+    width: 100%;
+}
+div.widget input[type=text],
+div.widget input[type=checkbox] {
+    background-color: #fff;
+    border:1px solid #999;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-radius: 5px;
+    box-sizing: border-box;
+    display: block;/*reset from inline*/
+    font-family: Arial, Helvetica, "sans serif";
+    font-size: 0.8em;
+    height: 100%;
+    line-height: 1.2em;
+    margin: 0;/*remove defaults*/
+    max-width: 100%;
+    overflow-y: auto;/*resets IE*/
+    overflow-x: hidden;/*resets IE*/
+    padding: 4px;
+    resize: none;
+    width: 100%;
+}
+div.widget input[type=checkbox] {
+    padding: 0;
+    width: 25%;
+}
+input[type=button],
+input[type=submit] {
+	font-family: Podkova;
+	font-size: 1em;
+	height: 1.5em;
+    margin: 0.5em auto;
+	text-transform: uppercase;
+    width: 100%;
+}
