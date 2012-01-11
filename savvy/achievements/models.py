@@ -1,5 +1,5 @@
 from django.db import models
-from lessons.models import Unit, Engagement, Assessment
+from savvy.lessons.models import Unit, Engagement, Assessment
 from badger.models import Badge, Progress, BadgeAlreadyAwardedException
 from django.db.models.fields.related import ForeignKey
 from django.dispatch.dispatcher import receiver

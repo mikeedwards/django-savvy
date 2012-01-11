@@ -4,7 +4,7 @@ Created on Jan 8, 2012
 @author: Mike_Edwards
 '''
 from django.contrib import admin
-from lessons.models import Unit, Worksheet, RelatedContent, UnitType, Assignment, Engagement,\
+from savvy.lessons.models import Unit, Worksheet, RelatedContent, UnitType, Assignment, Engagement,\
     Assessment
 
 admin.site.register(Assignment)

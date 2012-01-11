@@ -6,7 +6,7 @@ Created on Jan 6, 2012
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from django_extensions.utils.uuid import uuid4
-from lessons.models import Worksheet
+from savvy.lessons.models import Worksheet
 import logging 
 from logging import DEBUG
 log = logging.getLogger("django.response")
