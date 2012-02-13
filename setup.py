@@ -20,7 +20,7 @@ setup(name='django-savvy',
                 'savvy.lessons.migrations',
                 'savvy.assemblies.migrations',
                 'savvy.achievements.migrations'],
-      package_data={'lessons':['templates/lessons/*.html','static/lessons/css/*.css']},
+      package_data={'savvy.lessons':['templates/lessons/*.html','static/lessons/css/*.css']},
       include_package_data=True,
       classifiers=[
         'Development Status :: 2 - Pre-Alpha',
